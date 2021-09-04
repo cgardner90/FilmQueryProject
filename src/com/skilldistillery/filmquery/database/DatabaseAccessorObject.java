@@ -14,8 +14,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	private static final String URL = "jdbc:mysql://localhost:3306/sdvid?useSSL=false";
 	private String user = "student";
 	private String pass = "student";
-	
-	
+
 	public DatabaseAccessorObject() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -24,60 +23,69 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			System.err.println("Error loading database driver");
 		}
 	}
-	
-  @Override
-  public Film findFilmById(int filmId) {
-	  Film film = null;
-	  
-	  try {
-	  Connection conn = DriverManager.getConnection(URL, user, pass);
-	  String sql = "SELECT id, title, description, release_year, language_id, rental_duration " 
-			  +" rental_rate, length, replacement_cost, rating, special_features " 
-			  + " FROM film WHERE id = ? ";
-	  PreparedStatement stmt = conn.prepareStatement(sql);
-	  stmt.setInt(1, filmId);
-	  ResultSet rs = stmt.executeQuery();if(rs.next()) {
-		  	film = new Film();
-		  	film.setId(rs.getInt("id"));
-		  	film.setTitle(rs.getString("title"));
-		  	film.setDescription(rs.getString("description"));
-		  	film.setReleaseYear(rs.getInt("release_year"));
-		  	film.setLanguageId(rs.getInt("language_id"));
-		  	film.setRentalDuration(rs.getInt("rental_duration"));
-		  	film.setRentalRate(rs.getDouble("rental_rate"));
-		  	film.setLength(rs.getInt("length"));
-		  	film.setReplacementCost(rs.getDouble("replacement_cost"));
-		  	film.setRating(rs.getInt("rating"));
-		  	film.setSpecialFeatures(rs.getString("special_features"));
-	  
-	  
-	  
-	  }
-	 
-	  
-	  
-	  
-	  
-	  
-	  
-	  }catch(SQLException e) {
-		  System.err.println();
-		  
-	  }
-	  
-	  return film;
-  }
+
+	@Override
+	public Film findFilmById(int filmId) {
+		Film film = null;
+
+		try {
+			Connection conn = DriverManager.getConnection(URL, user, pass);
+			String sql = "SELECT id, title, description, release_year, language_id, rental_duration "
+					+ " rental_rate, length, replacement_cost, rating, special_features " + " FROM film WHERE id = ? ";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, filmId);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				film = new Film();
+				film.setId(rs.getInt("id"));
+				film.setTitle(rs.getString("title"));
+				film.setDescription(rs.getString("description"));
+				film.setReleaseYear(rs.getInt("release_year"));
+				film.setLanguageId(rs.getInt("language_id"));
+				film.setRentalDuration(rs.getInt("rental_duration"));
+				film.setRentalRate(rs.getDouble("rental_rate"));
+				film.setLength(rs.getInt("length"));
+				film.setReplacementCost(rs.getDouble("replacement_cost"));
+				film.setRating(rs.getInt("rating"));
+				film.setSpecialFeatures(rs.getString("special_features"));
+
+			}
+		} catch (SQLException e) {
+			System.err.println();
+
+		}
+
+		return film;
+	}
 
 @Override
 public Actor findActorById(int actorId) {
-	// TODO Auto-generated method stub
-	return null;
+	Actor a= null;
+	try {
+		  Connection conn = DriverManager.getConnection(URL, user, pass);
+		  String sql = "SELECT id, first_name, last_name "
+				  + " FROM actor WHERE first_name = %?% ";
+		  PreparedStatement stmt = conn.prepareStatement(sql);
+		  stmt.setInt(1, actorId);
+		  ResultSet rs = stmt.executeQuery();
+		  if(rs.next()) {
+		  a = new Actor();
+		  a.setId(rs.getInt("id"));
+		  a.setFirstName(rs.getString("first_name"));
+		  a.setLastName(rs.getString("last_name"));
+
+		  
+		  }
+	 }catch (SQLException e) {
+		 System.err.println("SQL Failure");
+	 }
+	return a;
 }
 
-@Override
-public List<Actor> findActorsByFilmId(int filmId) {
-	// TODO Auto-generated method stub
-	return null;
-}
+	@Override
+	public List<Actor> findActorsByFilmId(int filmId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
