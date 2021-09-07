@@ -14,44 +14,42 @@ public class Film {
 	private double rentalRate;
 	private int length;
 	private double replacementCost;
-	private int rating;
+	private String rating;
 	private String specialFeatures;
+	private String language;
 	
 	
 	
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
 	public Film() {
 		
 	}
 
 	public Film(int id, String title, String description, int releaseYear, int languageId, int rentalDuration,
-			double rentalRate, int length, double replacementCost, int rating, String specialFeatures) {
+			double rentalRate, int length, double replacementCost, String rating, String specialFeatures, String language) {
 
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.releaseYear = releaseYear;
 		this.languageId = languageId;
-
 		this.rentalDuration = rentalDuration;
 		this.rentalRate = rentalRate;
 		this.length = length;
 		this.replacementCost = replacementCost;
 		this.rating = rating;
 		this.specialFeatures = specialFeatures;
+		this.language = language;
 		
 	}
 	
-	public Film( int id, String title, int rentalDuration, double rentalRate, double replacementCost) {
-		
-		this.id = id;
-		this.title = title;
-		this.rentalDuration = rentalDuration;
-		this.rentalRate = rentalRate;
-		this.replacementCost = replacementCost;
-		
-		
-		
-	}
 
 	@Override
 	public String toString() {
@@ -78,6 +76,8 @@ public class Film {
 		builder.append(rating);
 		builder.append(", specialFeatures=");
 		builder.append(specialFeatures);
+		builder.append(", language =");
+		builder.append(language);
 		builder.append("]");
 		return builder.toString();
 	}
@@ -171,11 +171,11 @@ public class Film {
 		this.replacementCost = replacementCost;
 	}
 
-	public int getRating() {
+	public String getRating() {
 		return rating;
 	}
 
-	public void setRating(int rating) {
+	public void setRating(String rating) {
 		this.rating = rating;
 	}
 
